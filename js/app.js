@@ -26,6 +26,7 @@ function handleLogin(event) {
         if (data.token) {
             localStorage.setItem('token', data.token);
             window.location.href = 'main.html';
+            fetchIncidents();
         } else {
             document.getElementById('loginError').textContent = 'Invalid login credentials';
         }
