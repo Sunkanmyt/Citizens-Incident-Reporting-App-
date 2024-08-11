@@ -11,7 +11,7 @@ function handleLogin(event) {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     
-    fetch('http://localhost/wordpress/wp-json/jwt-auth/v1/token', {
+    fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/jwt-auth/v1/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ function handleLogin(event) {
 }
 
 function fetchIncidents() {
-    fetch('http://localhost/wordpress/wp-json/wp/v2/posts', {
+    fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/posts', {
     })
     .then(response => response.json())
     .then(data => {
@@ -55,7 +55,7 @@ function fetchIncidents() {
             if (acf.picture && typeof acf.picture === 'number') {
                 const pictureId = acf.picture;
                 // Fetch the image URL using the media ID
-                fetch(`http://localhost/wordpress/wp-json/wp/v2/media/${pictureId}`)
+                fetch(`https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/media/${pictureId}`)
                     .then(response => response.json())
                     .then(mediaData => {
                         const imageUrl = mediaData.source_url;
@@ -109,7 +109,7 @@ function submitIncident() {
         function uploadImage(file) {
             const formData = new FormData();
             formData.append('file', file);
-            return fetch('http://localhost/wordpress/wp-json/wp/v2/media', {
+            return fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/media', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -138,7 +138,7 @@ function submitIncident() {
                 formData.append('acf[picture]', imageId);
             }
 
-            return fetch('http://localhost/wordpress/wp-json/wp/v2/posts', {
+            return fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/posts', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token'),
