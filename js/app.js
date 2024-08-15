@@ -1,9 +1,8 @@
-// document.addEventListener('deviceready', onDeviceReady, false);
+document.addEventListener('deviceready', onDeviceReady, false);
 
-// function onDeviceReady() {
-//     console.log('Device is ready');
-//     // fetchIncidents();
-// }
+function onDeviceReady() {
+    console.log('Device is ready');
+}
 
 function handleLogin(event) {
     event.preventDefault();
