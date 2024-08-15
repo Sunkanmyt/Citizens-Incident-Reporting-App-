@@ -1,9 +1,9 @@
-document.addEventListener('deviceready', onDeviceReady, false);
+// document.addEventListener('deviceready', onDeviceReady, false);
 
-function onDeviceReady() {
-    // console.log('Device is ready');
-    fetchIncidents();
-}
+// function onDeviceReady() {
+//     console.log('Device is ready');
+//     // fetchIncidents();
+// }
 
 function handleLogin(event) {
     event.preventDefault();
@@ -11,7 +11,7 @@ function handleLogin(event) {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     
-    fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/jwt-auth/v1/token', {
+    fetch('http://localhost/wordpress/wp-json/jwt-auth/v1/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -26,7 +26,6 @@ function handleLogin(event) {
         if (data.token) {
             localStorage.setItem('token', data.token);
             window.location.href = 'main.html';
-            fetchIncidents();
         } else {
             document.getElementById('loginError').textContent = 'Invalid login credentials';
         }
@@ -38,7 +37,7 @@ function handleLogin(event) {
 }
 
 function fetchIncidents() {
-    fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/posts', {
+    fetch('http://localhost/wordpress/wp-json/wp/v2/posts', {
     })
     .then(response => response.json())
     .then(data => {
@@ -56,7 +55,7 @@ function fetchIncidents() {
             if (acf.picture && typeof acf.picture === 'number') {
                 const pictureId = acf.picture;
                 // Fetch the image URL using the media ID
-                fetch(`https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/media/${pictureId}`)
+                fetch(`http://localhost/wordpress/wp-json/wp/v2/media/${pictureId}`)
                     .then(response => response.json())
                     .then(mediaData => {
                         const imageUrl = mediaData.source_url;
@@ -87,9 +86,9 @@ function fetchIncidents() {
 }
 
 // Check if token exists when loading the main page
-if (window.location.pathname.endsWith('index.html')) {
+if (window.location.pathname.endsWith('main.html')) {
     if (!localStorage.getItem('token')) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     } else {
         fetchIncidents();
     }
@@ -110,7 +109,7 @@ function submitIncident() {
         function uploadImage(file) {
             const formData = new FormData();
             formData.append('file', file);
-            return fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/media', {
+            return fetch('http://localhost/wordpress/wp-json/wp/v2/media', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -139,7 +138,7 @@ function submitIncident() {
                 formData.append('acf[picture]', imageId);
             }
 
-            return fetch('https://9a3e-105-112-188-169.ngrok-free.app/wordpress/wp-json/wp/v2/posts', {
+            return fetch('http://localhost/wordpress/wp-json/wp/v2/posts', {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -188,4 +187,3 @@ function submitIncident() {
         alert('Error getting geolocation');
     });
 }
-
